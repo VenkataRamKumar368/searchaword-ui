@@ -1,0 +1,163 @@
+/* ========================= */
+/* Main container */
+/* ========================= */
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* ========================= */
+/* Two-column layout */
+/* ========================= */
+.layout {
+  display: flex;
+  margin-top: 20px;
+  min-height: 500px;
+}
+
+/* ========================= */
+/* Left sidebar */
+/* ========================= */
+.sidebar {
+  width: 260px;
+  padding: 15px;
+  border-right: 1px solid #ddd;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+/* ========================= */
+/* Document History Styling */
+/* ========================= */
+.history-list,
+.history-preview ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-list li,
+.history-item {
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+}
+
+.history-list li:hover,
+.history-item:hover {
+  background-color: #e0e0e0;
+}
+
+.active-doc {
+  background-color: #1976d2;
+  color: white;
+  font-weight: 600;
+}
+
+.history-preview {
+  margin-top: 30px;
+}
+
+/* ========================= */
+/* Navigation buttons layout */
+/* ========================= */
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ========================= */
+/* Right document preview */
+/* ========================= */
+.preview {
+  flex: 1;
+  padding: 20px;
+  max-height: 75vh;
+  overflow-y: auto;
+  background-color: white;
+  line-height: 1.6;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+/* ========================= */
+/* Buttons */
+/* ========================= */
+button {
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+button:hover:enabled {
+  background-color: #1565c0;
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* ========================= */
+/* Inputs */
+/* ========================= */
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ========================= */
+/* Match Highlight Styling */
+/* ========================= */
+.match {
+  background-color: yellow;
+  padding: 2px;
+  border-radius: 2px;
+}
+
+.match.active {
+  background-color: orange;
+  box-shadow: 0 0 6px rgba(255, 140, 0, 0.8);
+}
+
+/* Smooth scroll alignment */
+.preview mark {
+  scroll-margin: 80px;
+}
+
+/* ========================= */
+/* Scrollbar polish (optional) */
+/* ========================= */
+.preview::-webkit-scrollbar {
+  width: 8px;
+}
+
+.preview::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.preview::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}

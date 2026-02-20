@@ -1,0 +1,160 @@
+<div class="container">
+
+  <h2>Document Viewer</h2>
+
+  <!-- ========================= -->
+  <!-- STEP 1: Upload Screen -->
+  <!-- ========================= -->
+  <div *ngIf="!documentLoaded">
+
+    <input type="file" (change)="onFileSelected($event)">
+    <br><br>
+
+    <button
+      (click)="onUpload()"
+      [disabled]="loading">
+      {{ loading ? 'Uploading...' : 'Upload Document' }}
+    </button>
+
+    <div *ngIf="loading">
+      <p>🔄 Uploading document...</p>
+    </div>
+
+    <!-- 🔥 Document History Preview -->
+    <div *ngIf="documents.length > 0" class="history-preview">
+      <h3>Recent Documents</h3>
+
+      <ul>
+        <li
+          *ngFor="let doc of documents"
+          (click)="openDocument(doc.id)"
+          class="history-item">
+          {{ doc.fileName }}
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ========================= -->
+  <!-- STEP 2: Main Layout -->
+  <!-- ========================= -->
+  <div *ngIf="documentLoaded" class="layout">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- 🔥 Upload History -->
+      <h3>Documents</h3>
+
+      <ul class="history-list">
+        <li
+          *ngFor="let doc of documents"
+          (click)="openDocument(doc.id)"
+          [class.active-doc]="doc.id === selectedDocumentId">
+          {{ doc.fileName }}
+        </li>
+      </ul>
+
+      <hr>
+
+      <!-- ========================= -->
+      <!-- LOCAL WORD SEARCH -->
+      <!-- ========================= -->
+      <h3>Search Word</h3>
+
+      <input
+        type="text"
+        [(ngModel)]="word"
+        placeholder="Enter word"
+      >
+      <br><br>
+
+      <button (click)="onSearch()">
+        Search
+      </button>
+
+      <hr>
+
+      <!-- Match Counter -->
+      <div *ngIf="count > 0">
+        <p>
+          {{ currentMatchIndex + 1 }} of {{ count }}
+        </p>
+
+        <div class="nav-buttons">
+          <button (click)="previousMatch()">Previous</button>
+          <button (click)="nextMatch()">Next</button>
+        </div>
+      </div>
+
+      <!-- No Match -->
+      <p *ngIf="count === 0 && word">
+        No matches found
+      </p>
+
+      <hr>
+
+      <!-- ========================= -->
+      <!-- LETTER-BASED SEARCH -->
+      <!-- ========================= -->
+      <h3>Search by Letters</h3>
+
+      <input
+        type="text"
+        [(ngModel)]="letterInput"
+        placeholder="Enter letters (e.g. o,e)"
+      >
+      <br><br>
+
+      <button (click)="searchByLetters()">
+        Search Letters
+      </button>
+
+      <!-- Error -->
+      <p *ngIf="letterError" style="color: red;">
+        {{ letterError }}
+      </p>
+
+      <!-- Results -->
+      <div *ngIf="letterResults.length > 0">
+        <p><strong>Matching Words:</strong></p>
+        <ul>
+          <li *ngFor="let word of letterResults">
+            {{ word }}
+          </li>
+        </ul>
+
+        <!-- ✅ Download Buttons -->
+        <div style="margin-top: 10px;">
+          <button (click)="downloadLetterSearch('txt')">
+            Download TXT
+          </button>
+
+          <button (click)="downloadLetterSearch('pdf')">
+            Download PDF
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <button (click)="documentLoaded = false">
+        Upload New Document
+      </button>
+
+    </div>
+
+    <!-- RIGHT DOCUMENT PREVIEW -->
+    <div class="preview">
+
+      <div
+        *ngIf="highlightedHtml"
+        [innerHTML]="highlightedHtml">
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
