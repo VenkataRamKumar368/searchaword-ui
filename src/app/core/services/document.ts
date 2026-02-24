@@ -23,7 +23,8 @@ export interface DocumentListResponse {
 })
 export class DocumentService {
 
-  private baseUrl = `${environment.apiUrl}/api/v1/documents`;
+  // Base API URL from environment
+  private baseUrl = `${environment.apiBaseUrl}/documents`;
 
   constructor(private http: HttpClient) {}
 
@@ -83,7 +84,7 @@ export class DocumentService {
     documentId: number,
     letters: string,
     type: string
-  ) {
+  ): Observable<Blob> {
     return this.http.get(
       `${this.baseUrl}/${documentId}/letter-search/download`,
       {

@@ -1,14 +1,46 @@
 /* ========================= */
+/* Header Bar */
+/* ========================= */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+/* ========================= */
 /* Main container */
 /* ========================= */
 .container {
   max-width: 1100px;
   margin: 40px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fafafa;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* ========================= */
+/* Page Title */
+/* ========================= */
+.container h2 {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #333;
 }
 
 /* ========================= */
@@ -27,12 +59,21 @@
 .sidebar {
   width: 260px;
   padding: 15px;
-  border-right: 1px solid #ddd;
-  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+  background-color: #fafafa;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   overflow-y: auto;
+  border-radius: 6px;
+}
+
+/* Sidebar headings */
+.sidebar h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #444;
 }
 
 /* ========================= */
@@ -47,16 +88,17 @@
 
 .history-list li,
 .history-item {
-  padding: 6px 8px;
+  padding: 8px 10px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 13px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .history-list li:hover,
 .history-item:hover {
-  background-color: #e0e0e0;
+  background-color: #e8f0fe;
+  transform: translateX(2px);
 }
 
 .active-doc {
@@ -86,10 +128,25 @@
   padding: 20px;
   max-height: 75vh;
   overflow-y: auto;
-  background-color: white;
-  line-height: 1.6;
+  background-color: #ffffff;
+  line-height: 1.7;
   font-size: 14px;
-  border-radius: 4px;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+/* ========================= */
+/* Empty State Styling */
+/* ========================= */
+.empty-state {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f5f7fa;
+  border: 1px dashed #d0d7de;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
 }
 
 /* ========================= */
@@ -100,18 +157,19 @@ button {
   background-color: #1976d2;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 button:hover:enabled {
   background-color: #1565c0;
+  transform: translateY(-1px);
 }
 
 button:disabled {
-  background-color: #999;
+  background-color: #b0b0b0;
   cursor: not-allowed;
 }
 
@@ -121,24 +179,32 @@ button:disabled {
 input[type="text"],
 input[type="file"] {
   width: 100%;
-  padding: 6px;
+  padding: 8px;
   margin-bottom: 8px;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: border 0.2s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #1976d2;
 }
 
 /* ========================= */
 /* Match Highlight Styling */
 /* ========================= */
 .match {
-  background-color: yellow;
-  padding: 2px;
-  border-radius: 2px;
+  background-color: #fff176;
+  padding: 2px 4px;
+  border-radius: 3px;
 }
 
 .match.active {
-  background-color: orange;
+  background-color: #ff9800;
+  color: white;
   box-shadow: 0 0 6px rgba(255, 140, 0, 0.8);
 }
 
@@ -148,7 +214,7 @@ input[type="file"] {
 }
 
 /* ========================= */
-/* Scrollbar polish (optional) */
+/* Scrollbar polish */
 /* ========================= */
 .preview::-webkit-scrollbar {
   width: 8px;
@@ -164,7 +230,7 @@ input[type="file"] {
 }
 
 /* ================================================= */
-/* 📱 MOBILE RESPONSIVE SECTION (NEW ADDED PART)     */
+/* 📱 MOBILE RESPONSIVE SECTION */
 /* ================================================= */
 
 @media (max-width: 768px) {
@@ -181,7 +247,7 @@ input[type="file"] {
   .sidebar {
     width: 100%;
     border-right: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
   }
 
   .preview {
@@ -199,5 +265,16 @@ input[type="file"] {
 
   button {
     width: 100%;
+  }
+
+  .header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .user-section {
+    width: 100%;
+    justify-content: space-between;
   }
 }

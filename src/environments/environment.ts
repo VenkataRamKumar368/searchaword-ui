@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://searchaword-1.onrender.com'
+  production: false,
+  apiBaseUrl: 'http://localhost:8080/api/v1'
 };

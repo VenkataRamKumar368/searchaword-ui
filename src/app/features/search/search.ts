@@ -8,6 +8,9 @@ import {
   DocumentUploadResponse
 } from '../../core/services/document';
 
+import { AuthService } from '../../core/services/auth.service';
+import { ToastService } from '../../core/services/toast.service';
+
 @Component({
   selector: 'app-search',
   standalone: true,
@@ -16,6 +19,8 @@ import {
   styleUrl: './search.css'
 })
 export class SearchComponent implements OnInit {
+
+  username: string | null = null;
 
   selectedFile!: File;
   word: string = '';
@@ -36,23 +41,41 @@ export class SearchComponent implements OnInit {
   letterResults: string[] = [];
   letterError: string = '';
 
-  constructor(private documentService: DocumentService) {}
+  constructor(
+    private documentService: DocumentService,
+    private authService: AuthService,
+    private toastService: ToastService
+  ) {}
 
   // ============================================
   // INIT
   // ============================================
 
   ngOnInit(): void {
+    this.username = this.authService.getUsername();
     this.loadDocuments();
   }
+
+  // ============================================
+  // LOGOUT
+  // ============================================
+
+  logout(): void {
+    this.toastService.info('Logged out successfully');
+    this.authService.logout();
+  }
+
+  // ============================================
+  // LOAD DOCUMENTS
+  // ============================================
 
   loadDocuments() {
     this.documentService.getAll().subscribe({
       next: (data) => {
         this.documents = data;
       },
-      error: (err) => {
-        console.error('Failed to load documents', err);
+      error: () => {
+        this.toastService.error('Failed to load documents');
       }
     });
   }
@@ -86,7 +109,7 @@ export class SearchComponent implements OnInit {
   onUpload() {
 
     if (!this.selectedFile) {
-      alert('Please select a file');
+      this.toastService.info('Please select a file');
       return;
     }
 
@@ -106,18 +129,24 @@ export class SearchComponent implements OnInit {
           this.currentMatchIndex = 0;
           this.loading = false;
 
+          this.toastService.success('Upload successful — local DB updated');
           this.loadDocuments();
         },
         error: (err) => {
-          console.error(err);
-          alert('Upload failed');
+
           this.loading = false;
+
+          if (err?.status === 409) {
+            this.toastService.error('Duplicate document already uploaded.');
+          } else {
+            this.toastService.error('Upload failed');
+          }
         }
       });
   }
 
   // ============================================
-  // OPEN EXISTING DOCUMENT
+  // OPEN DOCUMENT
   // ============================================
 
   openDocument(id: number) {
@@ -138,24 +167,25 @@ export class SearchComponent implements OnInit {
           this.count = 0;
           this.currentMatchIndex = 0;
           this.loading = false;
+
+          this.toastService.success('Document loaded');
         },
-        error: (err) => {
-          console.error(err);
-          alert('Failed to open document');
+        error: () => {
           this.loading = false;
+          this.toastService.error('Failed to open document');
         }
       });
   }
 
   // ============================================
-  // LETTER SEARCH WITH HIGHLIGHT
+  // LETTER SEARCH
   // ============================================
 
   searchByLetters() {
 
     if (!this.selectedDocumentId) return;
 
-    this.word = ''; // Prevent conflict with word search
+    this.word = '';
     this.letterError = '';
     this.letterResults = [];
 
@@ -167,6 +197,7 @@ export class SearchComponent implements OnInit {
           this.letterResults = results;
 
           if (results.length === 0) {
+            this.toastService.info('No matching words found');
             this.highlightedHtml = this.originalContent;
             this.count = 0;
             this.currentMatchIndex = 0;
@@ -186,6 +217,8 @@ export class SearchComponent implements OnInit {
             '<mark class="match">$&</mark>'
           );
 
+          this.toastService.success(`${results.length} matching words found`);
+
           setTimeout(() => {
             this.highlightCurrentMatch();
           }, 0);
@@ -193,24 +226,24 @@ export class SearchComponent implements OnInit {
         error: (err) => {
 
           if (err.status === 400) {
-            this.letterError = 'Please enter valid letters.';
+            this.toastService.error('Please enter valid letters.');
           } else if (err.status === 404) {
-            this.letterError = 'Document not found.';
+            this.toastService.error('Document not found.');
           } else {
-            this.letterError = 'Something went wrong.';
+            this.toastService.error('Something went wrong.');
           }
         }
       });
   }
 
   // ============================================
-  // DOWNLOAD LETTER SEARCH RESULT
+  // DOWNLOAD LETTER SEARCH
   // ============================================
 
   downloadLetterSearch(type: string) {
 
     if (!this.selectedDocumentId || !this.letterInput) {
-      alert('Please perform a letter search first.');
+      this.toastService.info('Perform letter search first');
       return;
     }
 
@@ -234,10 +267,11 @@ export class SearchComponent implements OnInit {
 
           document.body.removeChild(a);
           window.URL.revokeObjectURL(url);
+
+          this.toastService.success('Download started');
         },
-        error: (err) => {
-          console.error(err);
-          alert('Download failed');
+        error: () => {
+          this.toastService.error('Download failed');
         }
       });
   }
@@ -248,7 +282,7 @@ export class SearchComponent implements OnInit {
 
   onSearch() {
 
-    this.letterResults = []; // prevent mixing
+    this.letterResults = [];
     this.letterInput = '';
 
     if (!this.word) {
@@ -269,6 +303,10 @@ export class SearchComponent implements OnInit {
       regex,
       '<mark class="match">$&</mark>'
     );
+
+    if (this.count === 0) {
+      this.toastService.info('No matches found');
+    }
 
     setTimeout(() => {
       this.highlightCurrentMatch();

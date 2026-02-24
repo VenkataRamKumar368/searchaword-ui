@@ -1,3 +1,12 @@
+<div class="header-bar">
+  <div class="app-title">SearchAWord</div>
+
+  <div class="user-section">
+    <span *ngIf="username">Welcome, {{ username }}</span>
+    <button (click)="logout()">Logout</button>
+  </div>
+</div>
+
 <div class="container">
 
   <h2>Document Viewer</h2>
@@ -34,6 +43,14 @@
       </ul>
     </div>
 
+    <!-- 🟢 Empty State (Upload Screen) -->
+    <div *ngIf="!loading && documents.length === 0" class="empty-state">
+      <p>No documents uploaded yet.</p>
+      <p style="font-size: 14px; color: gray;">
+        Upload your first document to begin searching.
+      </p>
+    </div>
+
   </div>
 
   <!-- ========================= -->
@@ -56,6 +73,13 @@
         </li>
       </ul>
 
+      <!-- 🟢 Empty State (Sidebar) -->
+      <div *ngIf="documents.length === 0" class="empty-state">
+        <p style="color: gray; font-size: 14px;">
+          No documents available.
+        </p>
+      </div>
+
       <hr>
 
       <!-- ========================= -->
@@ -67,10 +91,13 @@
         type="text"
         [(ngModel)]="word"
         placeholder="Enter word"
+        [disabled]="!selectedDocumentId"
       >
       <br><br>
 
-      <button (click)="onSearch()">
+      <button
+        (click)="onSearch()"
+        [disabled]="!selectedDocumentId">
         Search
       </button>
 
@@ -104,10 +131,13 @@
         type="text"
         [(ngModel)]="letterInput"
         placeholder="Enter letters (e.g. o,e)"
+        [disabled]="!selectedDocumentId"
       >
       <br><br>
 
-      <button (click)="searchByLetters()">
+      <button
+        (click)="searchByLetters()"
+        [disabled]="!selectedDocumentId">
         Search Letters
       </button>
 
@@ -125,7 +155,7 @@
           </li>
         </ul>
 
-        <!-- ✅ Download Buttons -->
+        <!-- Download Buttons -->
         <div style="margin-top: 10px;">
           <button (click)="downloadLetterSearch('txt')">
             Download TXT
@@ -151,6 +181,11 @@
       <div
         *ngIf="highlightedHtml"
         [innerHTML]="highlightedHtml">
+      </div>
+
+      <!-- 🟢 Preview Empty State -->
+      <div *ngIf="!highlightedHtml" class="empty-state">
+        <p>Select a document to preview content.</p>
       </div>
 
     </div>
