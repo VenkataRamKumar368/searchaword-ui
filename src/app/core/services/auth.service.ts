@@ -13,7 +13,7 @@ interface AuthResponse {
 })
 export class AuthService {
 
-  private baseUrl = `${environment.apiBaseUrl}/api/auth`;
+  private baseUrl = `${environment.apiBaseUrl}/auth`;
   private tokenKey = 'auth_token';
 
   constructor(
