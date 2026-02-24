@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink   // 🔥 REQUIRED FOR routerLink TO WORK
+    RouterLink
   ],
   templateUrl: './register.html',
   styleUrls: ['./register.css']
@@ -22,7 +22,10 @@ export class RegisterComponent {
   error = '';
   loading = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   register() {
     this.error = '';
@@ -35,34 +38,30 @@ export class RegisterComponent {
     }
 
     // Step 1: Register
-    this.http.post('http://localhost:8080/api/auth/register', {
-      username: this.username,
-      password: this.password
-    }).subscribe({
-      next: () => {
-        // Step 2: Immediately login
-        this.loginAfterRegister();
-      },
-      error: (err) => {
-        this.error = err.error?.message || 'Registration failed';
-        this.loading = false;
-      }
-    });
+    this.authService.register(this.username, this.password)
+      .subscribe({
+        next: () => {
+          // Step 2: Auto login
+          this.loginAfterRegister();
+        },
+        error: (err) => {
+          this.error = err.error?.message || 'Registration failed';
+          this.loading = false;
+        }
+      });
   }
 
   private loginAfterRegister() {
-    this.http.post<any>('http://localhost:8080/api/auth/login', {
-      username: this.username,
-      password: this.password
-    }).subscribe({
-      next: (response) => {
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/search']);
-      },
-      error: () => {
-        this.error = 'Auto login failed. Please login manually.';
-        this.loading = false;
-      }
-    });
+    this.authService.login(this.username, this.password)
+      .subscribe({
+        next: (response: any) => {
+          this.authService.saveToken(response.token);
+          this.router.navigate(['/search']);
+        },
+        error: () => {
+          this.error = 'Auto login failed. Please login manually.';
+          this.loading = false;
+        }
+      });
   }
 }
