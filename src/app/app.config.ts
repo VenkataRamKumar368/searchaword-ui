@@ -8,7 +8,8 @@ import { provideRouter } from '@angular/router';
 
 import {
   provideHttpClient,
-  withInterceptors
+  withInterceptors,
+  withFetch
 } from '@angular/common/http';
 
 import { routes } from './app.routes';
@@ -16,13 +17,23 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+
+    // 🌐 Router
     provideRouter(routes),
 
-    // 👇 Register JWT interceptor here
+    // ⚡ Performance Optimization
+    provideZoneChangeDetection({ eventCoalescing: true }),
+
+    // 🧠 Global Error Handling
+    provideBrowserGlobalErrorListeners(),
+
+    // 🔐 HTTP Client with JWT Interceptor
     provideHttpClient(
-      withInterceptors([authInterceptor])
+      withFetch(), // Modern fetch-based backend
+      withInterceptors([
+        authInterceptor
+      ])
     )
+
   ]
 };

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../services/toast.service';
+import { environment } from '../../../environments/environment';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -15,8 +16,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   let authReq = req;
 
-  // ✅ Attach JWT
-  if (token) {
+  // ✅ Only attach token for backend API calls (not auth endpoints)
+  const isApiCall = req.url.startsWith(environment.apiBaseUrl);
+  const isAuthEndpoint = req.url.includes('/auth/login') || req.url.includes('/auth/register');
+
+  if (token && isApiCall && !isAuthEndpoint) {
     authReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
@@ -27,24 +31,26 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     catchError((error) => {
 
-      // 🚨 GLOBAL 401 HANDLER
-      if (error.status === 401) {
+      switch (error.status) {
 
-        // Prevent double logout loops
-        if (authService.isLoggedIn()) {
-          toast.error('Session expired. Please login again.');
-          authService.logout();
-        }
-      }
+        // 🔐 401 - Unauthorized
+        case 401:
+          if (authService.isLoggedIn()) {
+            toast.error('Session expired. Please login again.');
+            authService.logout();
+          }
+          break;
 
-      // 🚨 GLOBAL 403 HANDLER
-      if (error.status === 403) {
-        toast.error('Access denied.');
-      }
+        // 🚫 403 - Forbidden
+        case 403:
+          toast.error('Access denied.');
+          break;
 
-      // 🚨 GLOBAL 500 HANDLER
-      if (error.status >= 500) {
-        toast.error('Server error. Please try again later.');
+        // 💥 5xx - Server errors
+        default:
+          if (error.status >= 500) {
+            toast.error('Server error. Please try again later.');
+          }
       }
 
       return throwError(() => error);

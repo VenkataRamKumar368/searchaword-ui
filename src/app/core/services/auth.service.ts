@@ -13,7 +13,10 @@ interface AuthResponse {
 })
 export class AuthService {
 
-  private baseUrl = `${environment.apiBaseUrl}/auth`;
+  private baseUrl =
+  environment.production
+    ? 'https://searchaword-backend.onrender.com/api/v1/auth'
+    : 'http://localhost:8080/api/v1/auth';
   private tokenKey = 'auth_token';
 
   constructor(
