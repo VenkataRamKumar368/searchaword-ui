@@ -81,70 +81,124 @@ export class SearchComponent implements OnInit {
   }
 
   // ============================================
-  // FILE SELECT
-  // ============================================
+// FILE SELECT
+// ============================================
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-    this.resetState();
+onFileSelected(event: any) {
+
+  const file: File = event.target.files?.[0];
+
+  if (!file) {
+    return;
   }
 
-  resetState() {
-    this.documentLoaded = false;
-    this.highlightedHtml = '';
-    this.originalContent = '';
-    this.count = 0;
-    this.word = '';
-    this.currentMatchIndex = 0;
+  const MAX_SIZE = 3 * 1024 * 1024; // 3MB
+  const allowedTypes = [
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'text/plain'
+  ];
 
-    this.letterInput = '';
-    this.letterResults = [];
-    this.letterError = '';
+  // 🔥 Validate file type
+  if (!allowedTypes.includes(file.type)) {
+    this.toastService.error('Unsupported file type. Only PDF, DOCX, TXT allowed.');
+    event.target.value = '';
+    return;
   }
 
-  // ============================================
-  // UPLOAD
-  // ============================================
+  // 🔥 Validate file size
+  if (file.size > MAX_SIZE) {
+    this.toastService.error('File too large. Maximum allowed size is 3MB.');
+    event.target.value = '';
+    return;
+  }
 
-  onUpload() {
+  this.selectedFile = file;
+  this.resetState();
+  }
 
-    if (!this.selectedFile) {
-      this.toastService.info('Please select a file');
-      return;
-    }
+// ============================================
+// RESET STATE
+// ============================================
 
-    this.loading = true;
+resetState() {
+  this.documentLoaded = false;
+  this.highlightedHtml = '';
+  this.originalContent = '';
+  this.count = 0;
+  this.word = '';
+  this.currentMatchIndex = 0;
 
-    this.documentService.upload(this.selectedFile)
-      .subscribe({
-        next: (response: DocumentUploadResponse) => {
+  this.letterInput = '';
+  this.letterResults = [];
+  this.letterError = '';
+}
 
-          this.originalContent = response.text;
-          this.highlightedHtml = this.originalContent;
+// ============================================
+// UPLOAD
+// ============================================
 
-          this.documentLoaded = true;
-          this.selectedDocumentId = response.documentId;
+onUpload() {
 
-          this.count = 0;
-          this.currentMatchIndex = 0;
-          this.loading = false;
+  if (!this.selectedFile) {
+    this.toastService.info('Please select a file');
+    return;
+  }
 
-          this.toastService.success('Upload successful — local DB updated');
-          this.loadDocuments();
-        },
-        error: (err) => {
+  // 🔥 Client-side size protection (3MB)
+  const MAX_SIZE = 3 * 1024 * 1024;
 
-          this.loading = false;
+  if (this.selectedFile.size > MAX_SIZE) {
+    this.toastService.error('File too large. Maximum allowed size is 3MB.');
+    return;
+  }
 
-          if (err?.status === 409) {
-            this.toastService.error('Duplicate document already uploaded.');
-          } else {
-            this.toastService.error('Upload failed');
-          }
+  this.loading = true;
+
+  this.documentService.upload(this.selectedFile)
+    .subscribe({
+      next: (response: DocumentUploadResponse) => {
+
+        this.originalContent = response.text;
+        this.highlightedHtml = this.originalContent;
+
+        this.documentLoaded = true;
+        this.selectedDocumentId = response.documentId;
+
+        this.count = 0;
+        this.currentMatchIndex = 0;
+        this.loading = false;
+
+        this.toastService.success('Upload successful — local DB updated');
+        this.loadDocuments();
+      },
+
+      error: (err) => {
+
+        this.loading = false;
+
+        console.error('Upload error:', err);
+
+        if (err?.status === 413) {
+          this.toastService.error('File too large. Maximum allowed size is 3MB.');
         }
-      });
-  }
 
+        else if (err?.status === 409) {
+          this.toastService.error('Duplicate document already uploaded.');
+        }
+
+        else if (err?.status === 400) {
+          this.toastService.error(err?.error?.message || 'Invalid file.');
+        }
+
+        else {
+          this.toastService.error(
+            err?.error?.message || 'Upload failed. Please try again.'
+          );
+        }
+      }
+    });
+  }
   // ============================================
   // OPEN DOCUMENT
   // ============================================
