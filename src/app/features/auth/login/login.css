@@ -1,49 +1,91 @@
+/* ========================= */
+/* Page Background */
+/* ========================= */
+body {
+  background: linear-gradient(135deg, #f4e7d3, #e6d3b3);
+  min-height: 100vh;
+}
+
+/* ========================= */
+/* Login Container (Card) */
+/* ========================= */
 .login-container {
   width: 320px;
-  margin: 100px auto;
+  margin: 120px auto;
   display: flex;
   flex-direction: column;
   gap: 14px;
+
+  /* Soft gradient background instead of solid */
+  background: linear-gradient(145deg, #d8c29d, #e6d3b3);
+
+  padding: 35px;
+  border-radius: 16px;
+
+  /* Soft floating shadow */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+
+  /* Smooth blend with background */
+  backdrop-filter: blur(2px);
+
+  /* Subtle entrance animation */
+  animation: fadeIn 0.8s ease-in-out;
 }
 
+/* ========================= */
+/* Title */
+/* ========================= */
 .login-container h2 {
   text-align: center;
   margin-bottom: 10px;
   font-weight: 600;
+  color: #5c3d2e;
+  font-family: 'Georgia', serif;
 }
 
+/* ========================= */
+/* Form Layout */
+/* ========================= */
 form {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
+/* ========================= */
+/* Inputs */
+/* ========================= */
 input {
-  padding: 8px 10px;
+  padding: 10px 12px;
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.2s ease;
+  border: 1px solid #c9b186;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  background-color: #fff;
 }
 
 input:focus {
   outline: none;
-  border-color: #1976d2;
+  border-color: #8b6f47;
+  box-shadow: 0 0 5px rgba(139,111,71,0.3);
 }
 
+/* ========================= */
+/* Button */
+/* ========================= */
 button {
-  padding: 8px;
+  padding: 10px;
   cursor: pointer;
   font-size: 14px;
   border: none;
-  border-radius: 4px;
-  background-color: #1976d2;
+  border-radius: 6px;
+  background-color: #2a6fbd;
   color: white;
-  transition: opacity 0.2s ease;
+  transition: 0.3s;
 }
 
 button:hover:not(:disabled) {
-  opacity: 0.9;
+  background-color: #1e5aa5;
 }
 
 button:disabled {
@@ -51,31 +93,55 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* ========================= */
+/* Error Message */
+/* ========================= */
 .error {
-  color: red;
+  color: #b30000;
   text-align: center;
   font-size: 14px;
 }
 
-/* Divider line */
+/* ========================= */
+/* Divider */
+/* ========================= */
 hr {
-  margin: 15px 0;
+  margin: 20px 0;
   border: none;
-  border-top: 1px solid #eee;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c9b186, transparent);
+  opacity: 0.6;
 }
 
-/* Register link styling */
+/* ========================= */
+/* Register Link */
+/* ========================= */
 .register-link {
   text-align: center;
   font-size: 14px;
+  color: #5c3d2e;
 }
 
 .register-link a {
-  color: #1976d2;
+  color: #2a6fbd;
   text-decoration: none;
   font-weight: 500;
 }
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+/* ========================= */
+/* Animation */
+/* ========================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
