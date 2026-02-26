@@ -1,84 +1,135 @@
-/* ========================= */
-/* Header Bar */
-/* ========================= */
-.header-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+/* ================================================= */
+/* PAGE WRAPPER */
+/* ================================================= */
+.page-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 60px;
 }
 
-.app-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
+/* ================================================= */
+/* HEADER BAR */
+/* ================================================= */
+.header-bar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 60px;
+  margin-bottom: 30px;
 }
 
 .user-section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 18px;
   font-size: 14px;
 }
 
-/* ========================= */
-/* Main container */
-/* ========================= */
+.user-section span {
+  font-weight: 500;
+  color: #4b3b2a;
+  letter-spacing: 0.3px;
+}
+
+.user-section button {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #2a6fbd, #1e5aa5);
+  color: white;
+  font-weight: 500;
+
+  transition: all 0.3s ease;
+}
+
+.user-section button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(42, 111, 189, 0.35);
+}
+
+/* ================================================= */
+/* MAIN CONTAINER */
+/* ================================================= */
 .container {
+  position: relative;
   max-width: 1100px;
   margin: 40px auto;
-  padding: 24px;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+
+  background: rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(14px);
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.07),
+    0 12px 25px rgba(0, 0, 0, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  transition: all 0.3s ease;
 }
 
-/* ========================= */
-/* Page Title */
-/* ========================= */
 .container h2 {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   font-weight: 600;
-  color: #333;
+  color: #3a2f1f;
+  letter-spacing: 0.5px;
 }
 
-/* ========================= */
-/* Two-column layout */
-/* ========================= */
+/* ================================================= */
+/* TWO COLUMN LAYOUT */
+/* ================================================= */
 .layout {
   display: flex;
   margin-top: 20px;
-  min-height: 500px;
-  gap: 20px;
+  min-height: 520px;
+  gap: 30px;
 }
 
-/* ========================= */
-/* Left sidebar */
-/* ========================= */
+/* ================================================= */
+/* SIDEBAR */
+/* ================================================= */
 .sidebar {
-  width: 260px;
-  padding: 15px;
-  border-right: 1px solid #eee;
-  background-color: #fafafa;
+  width: 270px;
+  padding: 18px;
+
+  background: rgba(230, 211, 179, 0.6);
+  backdrop-filter: blur(8px);
+
+  border-radius: 20px;
+
   display: flex;
   flex-direction: column;
-  gap: 12px;
+
+  gap: 10px;   /* Reduced spacing for tighter layout */
+
   overflow-y: auto;
-  border-radius: 6px;
 }
 
-/* Sidebar headings */
+/* Sidebar Section Titles */
 .sidebar h3 {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 5px;
-  color: #444;
+  margin: 6px 0 4px 0;  /* Tight vertical spacing */
+  color: #4b3b2a;
+  letter-spacing: 0.3px;
 }
 
-/* ========================= */
-/* Document History Styling */
-/* ========================= */
+/* Compact divider styling */
+.sidebar hr {
+  margin: 8px 0;
+  border: none;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ================================================= */
+/* DOCUMENT HISTORY */
+/* ================================================= */
 .history-list,
 .history-preview ul {
   list-style: none;
@@ -88,84 +139,90 @@
 
 .history-list li,
 .history-item {
-  padding: 8px 10px;
+  padding: 10px 12px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 13px;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition: all 0.2s ease;
 }
 
 .history-list li:hover,
 .history-item:hover {
-  background-color: #e8f0fe;
-  transform: translateX(2px);
+  background-color: rgba(42, 111, 189, 0.1);
+  transform: translateX(3px);
 }
 
 .active-doc {
-  background-color: #1976d2;
+  background: linear-gradient(135deg, #2a6fbd, #1e5aa5);
   color: white;
   font-weight: 600;
 }
 
-.history-preview {
-  margin-top: 30px;
-}
-
-/* ========================= */
-/* Navigation buttons layout */
-/* ========================= */
+/* ================================================= */
+/* NAVIGATION BUTTONS */
+/* ================================================= */
 .nav-buttons {
   display: flex;
   gap: 10px;
   margin-top: 8px;
 }
 
-/* ========================= */
-/* Right document preview */
-/* ========================= */
+/* ================================================= */
+/* DOCUMENT PREVIEW PANEL */
+/* ================================================= */
 .preview {
   flex: 1;
-  padding: 20px;
+  padding: 30px;
+
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+
+  border-radius: 20px;
+
   max-height: 75vh;
   overflow-y: auto;
-  background-color: #ffffff;
-  line-height: 1.7;
+
+  line-height: 1.8;
   font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #eee;
+
+  border: 1px solid rgba(255,255,255,0.4);
 }
 
-/* ========================= */
-/* Empty State Styling */
-/* ========================= */
+/* ================================================= */
+/* EMPTY STATE */
+/* ================================================= */
 .empty-state {
   margin-top: 15px;
-  padding: 15px;
-  background-color: #f5f7fa;
-  border: 1px dashed #d0d7de;
-  border-radius: 6px;
+  padding: 18px;
+
+  background: rgba(255,255,255,0.4);
+  border: 1px dashed rgba(0,0,0,0.1);
+  border-radius: 12px;
+
   text-align: center;
   font-size: 14px;
-  color: #666;
+  color: #5f5240;
 }
 
-/* ========================= */
-/* Buttons */
-/* ========================= */
+/* ================================================= */
+/* BUTTONS */
+/* ================================================= */
 button {
-  padding: 8px 16px;
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 9px 16px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+
+  border: none;
+  background: linear-gradient(135deg, #3a77c2, #2a6fbd);
+  color: white;
+
+  transition: all 0.25s ease;
 }
 
 button:hover:enabled {
-  background-color: #1565c0;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(58, 119, 194, 0.3);
 }
 
 button:disabled {
@@ -173,71 +230,67 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* ========================= */
-/* Inputs */
-/* ========================= */
+/* ================================================= */
+/* INPUTS */
+/* ================================================= */
 input[type="text"],
 input[type="file"] {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 9px 10px;
+  border-radius: 8px;
   font-size: 13px;
-  transition: border 0.2s ease;
+
+  border: 1px solid rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.7);
+
+  transition: all 0.2s ease;
 }
 
 input[type="text"]:focus {
   outline: none;
-  border-color: #1976d2;
+  border-color: #2a6fbd;
+  box-shadow: 0 0 8px rgba(42,111,189,0.3);
 }
 
-/* ========================= */
-/* Match Highlight Styling */
-/* ========================= */
+/* ================================================= */
+/* MATCH HIGHLIGHT */
+/* ================================================= */
 .match {
   background-color: #fff176;
   padding: 2px 4px;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .match.active {
   background-color: #ff9800;
   color: white;
-  box-shadow: 0 0 6px rgba(255, 140, 0, 0.8);
+  box-shadow: 0 0 8px rgba(255, 140, 0, 0.7);
 }
 
-/* Smooth scroll alignment */
-.preview mark {
-  scroll-margin: 80px;
-}
-
-/* ========================= */
-/* Scrollbar polish */
-/* ========================= */
+/* ================================================= */
+/* SCROLLBAR POLISH */
+/* ================================================= */
 .preview::-webkit-scrollbar {
   width: 8px;
 }
 
 .preview::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+  background-color: rgba(0,0,0,0.2);
   border-radius: 4px;
 }
 
 .preview::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa;
+  background-color: rgba(0,0,0,0.35);
 }
 
 /* ================================================= */
-/* 📱 MOBILE RESPONSIVE SECTION */
+/* MOBILE RESPONSIVE */
 /* ================================================= */
-
 @media (max-width: 768px) {
 
   .container {
-    margin: 10px;
-    padding: 15px;
+    margin: 15px;
+    padding: 20px;
   }
 
   .layout {
@@ -246,8 +299,6 @@ input[type="text"]:focus {
 
   .sidebar {
     width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #eee;
   }
 
   .preview {
@@ -257,10 +308,6 @@ input[type="text"]:focus {
 
   .nav-buttons {
     flex-direction: column;
-  }
-
-  .nav-buttons button {
-    width: 100%;
   }
 
   button {

@@ -1,21 +1,61 @@
 /* ========================= */
-/* Title Bar Background */
+/* Global Reset */
+/* ========================= */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================= */
+/* Full Page Background */
+/* ========================= */
+html {
+  height: 100%;
+  background: #f4e7d3; /* fallback */
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+
+  /* Smooth symmetric luxury gradient */
+  background: linear-gradient(
+    135deg,
+    #f4e7d3 0%,
+    #e6d3b3 50%,
+    #f4e7d3 100%
+  );
+
+  /* Prevent scrollbar gutter color difference */
+  scrollbar-gutter: stable both-edges;
+}
+
+/* ========================= */
+/* Title Bar */
 /* ========================= */
 .title-bar {
+  width: 100%;
+  padding: 30px 0 40px 0;
+
+  /* Softer natural blend */
   background: linear-gradient(
-    to right,
-    rgba(230, 211, 179, 0),
-    #e6d3b3 20%,
-    #e6d3b3 80%,
-    rgba(230, 211, 179, 0)
+    180deg,
+    rgba(230, 211, 179, 0.95) 0%,
+    rgba(230, 211, 179, 0.85) 60%,
+    rgba(230, 211, 179, 0.6) 100%
   );
-  padding: 25px 0 35px 0;
-  border-bottom: none;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+
   position: sticky;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(6px);
+
+  backdrop-filter: blur(8px);
 }
 
 /* ========================= */
@@ -23,52 +63,62 @@
 /* ========================= */
 .app-title {
   text-align: center;
-  font-size: 44px;
-  font-weight: bold;
+  font-size: 46px;
+  font-weight: 700;
   margin: 0;
   color: #2c2c2c;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   font-family: 'Georgia', serif;
+
+  animation: fadeInDown 0.8s ease-out;
   transition: transform 0.3s ease;
 }
 
-/* ========================= */
-/* Circular A Styling */
-/* ========================= */
-.circle-a {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 55px;
-  height: 55px;
-  background-color: black;
-  color: white;
-  border-radius: 50%;
-  font-size: 30px;
-  font-weight: bold;
-  margin: 0 10px;
-  transition: all 0.3s ease;
-}
-
-/* Glow effect on hover */
-.circle-a:hover {
-  background-color: #000;
-  box-shadow: 0 0 15px rgba(0,0,0,0.6);
-  transform: scale(1.1);
-}
-
-/* Title hover subtle effect */
 .app-title:hover {
   transform: scale(1.02);
 }
 
 /* ========================= */
-/* Animation */
+/* Circular A */
+/* ========================= */
+.circle-a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 60px;
+  height: 60px;
+
+  background: radial-gradient(circle at 30% 30%, #222, #000);
+  color: white;
+
+  border-radius: 50%;
+
+  font-size: 32px;
+  font-weight: bold;
+
+  margin: 0 14px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+  transition: all 0.3s ease;
+}
+
+.circle-a:hover {
+  box-shadow:
+    0 0 15px rgba(0, 0, 0, 0.6),
+    0 0 35px rgba(0, 0, 0, 0.3);
+
+  transform: scale(1.08);
+}
+
+/* ========================= */
+/* Fade Animation */
 /* ========================= */
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-25px);
   }
   to {
     opacity: 1;
