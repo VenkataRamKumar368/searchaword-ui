@@ -2,34 +2,38 @@
 /* Page Background */
 /* ========================= */
 body {
-  background: linear-gradient(135deg, #f4e7d3, #e6d3b3);
+  background: linear-gradient(135deg, #f7efe3 0%, #e6d3b3 50%, #f4e7d3 100%);
   min-height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', 'Poppins', sans-serif;
 }
 
 /* ========================= */
-/* Login Container (Card) */
+/* Login Container (Ultra Premium Card) */
 /* ========================= */
 .login-container {
-  width: 320px;
-  margin: 120px auto;
+  width: 340px;
+  margin: 140px auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 
-  /* Soft gradient background instead of solid */
-  background: linear-gradient(145deg, #d8c29d, #e6d3b3);
+  /* Glassmorphism effect */
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
 
-  padding: 35px;
-  border-radius: 16px;
+  padding: 40px;
+  border-radius: 24px;
 
-  /* Soft floating shadow */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  /* Luxury floating shadow */
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.08),
+    0 10px 20px rgba(0, 0, 0, 0.04);
 
-  /* Smooth blend with background */
-  backdrop-filter: blur(2px);
+  /* Soft glowing border */
+  border: 1px solid rgba(255, 255, 255, 0.3);
 
-  /* Subtle entrance animation */
-  animation: fadeIn 0.8s ease-in-out;
+  animation: floatIn 1s ease;
 }
 
 /* ========================= */
@@ -38,9 +42,10 @@ body {
 .login-container h2 {
   text-align: center;
   margin-bottom: 10px;
-  font-weight: 600;
+  font-weight: 700;
   color: #5c3d2e;
   font-family: 'Georgia', serif;
+  letter-spacing: 1px;
 }
 
 /* ========================= */
@@ -49,43 +54,46 @@ body {
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 /* ========================= */
 /* Inputs */
 /* ========================= */
 input {
-  padding: 10px 12px;
+  padding: 12px 14px;
   font-size: 14px;
-  border: 1px solid #c9b186;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.75);
+  transition: all 0.3s ease;
 }
 
 input:focus {
   outline: none;
-  border-color: #8b6f47;
-  box-shadow: 0 0 5px rgba(139,111,71,0.3);
+  border-color: #b99c6b;
+  box-shadow: 0 0 10px rgba(185, 156, 107, 0.35);
+  background: rgba(255,255,255,0.95);
 }
 
 /* ========================= */
 /* Button */
 /* ========================= */
 button {
-  padding: 10px;
-  cursor: pointer;
-  font-size: 14px;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 10px;
   border: none;
-  border-radius: 6px;
-  background-color: #2a6fbd;
+  background: linear-gradient(135deg, #3a77c2, #2a6fbd);
   color: white;
-  transition: 0.3s;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 button:hover:not(:disabled) {
-  background-color: #1e5aa5;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(58, 119, 194, 0.35);
 }
 
 button:disabled {
@@ -126,22 +134,24 @@ hr {
   color: #2a6fbd;
   text-decoration: none;
   font-weight: 500;
+  transition: 0.2s ease;
 }
 
 .register-link a:hover {
   text-decoration: underline;
+  color: #1e5aa5;
 }
 
 /* ========================= */
-/* Animation */
+/* Floating Animation */
 /* ========================= */
-@keyframes fadeIn {
+@keyframes floatIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }

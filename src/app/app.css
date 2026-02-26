@@ -2,13 +2,20 @@
 /* Title Bar Background */
 /* ========================= */
 .title-bar {
-  background: linear-gradient(to bottom, #e6d3b3 70%, rgba(230, 211, 179, 0));
-  padding: 20px 0 30px 0;
+  background: linear-gradient(
+    to right,
+    rgba(230, 211, 179, 0),
+    #e6d3b3 20%,
+    #e6d3b3 80%,
+    rgba(230, 211, 179, 0)
+  );
+  padding: 25px 0 35px 0;
   border-bottom: none;
-  box-shadow: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 1000;
+  backdrop-filter: blur(6px);
 }
 
 /* ========================= */
