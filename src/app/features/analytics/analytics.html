@@ -1,0 +1,65 @@
+<div class="container">
+
+  <h2>📊 Analytics Dashboard</h2>
+
+  <!-- ========================= -->
+  <!-- Filters -->
+  <!-- ========================= -->
+  <div class="filters">
+    <label>From:</label>
+    <input type="date" [(ngModel)]="from">
+
+    <label>To:</label>
+    <input type="date" [(ngModel)]="to">
+
+    <button (click)="refresh()">Apply</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <!-- ========================= -->
+  <!-- KPI Section -->
+  <!-- ========================= -->
+  <div class="kpi-section">
+
+    <div class="kpi-card">
+      <h4>Total Searches (Range)</h4>
+      <div class="kpi-value">{{ totalInRange }}</div>
+    </div>
+
+    <div class="kpi-card">
+      <h4>Top Queries Count</h4>
+      <div class="kpi-value">{{ topQueries.length }}</div>
+    </div>
+
+  </div>
+
+  <!-- ========================= -->
+  <!-- Trend Chart -->
+  <!-- ========================= -->
+  <h3>Daily Trend</h3>
+
+  <div class="chart-container" *ngIf="trends.length > 0">
+    <canvas id="trendChart"></canvas>
+  </div>
+
+  <!-- ========================= -->
+  <!-- Top Queries Table -->
+  <!-- ========================= -->
+  <h3>Top Queries</h3>
+
+  <div class="table-wrapper" *ngIf="topQueries.length > 0">
+    <table>
+      <tr>
+        <th>Query</th>
+        <th>Count</th>
+      </tr>
+      <tr *ngFor="let q of topQueries">
+        <td>{{ q.queryText }}</td>
+        <td>{{ q.count }}</td>
+      </tr>
+    </table>
+  </div>
+
+</div>

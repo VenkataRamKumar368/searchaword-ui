@@ -3,6 +3,9 @@ import { authGuard } from './core/guard/auth.guard';
 
 export const routes: Routes = [
 
+  // =========================
+  // DEFAULT → LOGIN
+  // =========================
   {
     path: '',
     redirectTo: 'login',
@@ -20,7 +23,7 @@ export const routes: Routes = [
   },
 
   // =========================
-  // REGISTER (NEW)
+  // REGISTER
   // =========================
   {
     path: 'register',
@@ -41,11 +44,21 @@ export const routes: Routes = [
   },
 
   // =========================
+  // 🔥 PROTECTED ANALYTICS
+  // =========================
+  {
+    path: 'analytics',
+    loadComponent: () =>
+      import('./features/analytics/analytics')
+        .then(m => m.AnalyticsComponent),
+    canActivate: [authGuard]
+  },
+
+  // =========================
   // FALLBACK
   // =========================
   {
     path: '**',
     redirectTo: 'login'
   }
-
 ];

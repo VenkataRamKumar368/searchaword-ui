@@ -14,7 +14,7 @@
 /* ========================= */
 html {
   height: 100%;
-  background: #f4e7d3; /* fallback */
+  background: #f4e7d3;
 }
 
 body {
@@ -22,7 +22,6 @@ body {
   width: 100%;
   overflow-x: hidden;
 
-  /* Smooth symmetric luxury gradient */
   background: linear-gradient(
     135deg,
     #f4e7d3 0%,
@@ -30,7 +29,6 @@ body {
     #f4e7d3 100%
   );
 
-  /* Prevent scrollbar gutter color difference */
   scrollbar-gutter: stable both-edges;
 }
 
@@ -39,9 +37,8 @@ body {
 /* ========================= */
 .title-bar {
   width: 100%;
-  padding: 30px 0 40px 0;
+  padding: 30px 0 20px 0;
 
-  /* Softer natural blend */
   background: linear-gradient(
     180deg,
     rgba(230, 211, 179, 0.95) 0%,
@@ -65,7 +62,6 @@ body {
   text-align: center;
   font-size: 46px;
   font-weight: 700;
-  margin: 0;
   color: #2c2c2c;
   letter-spacing: 3px;
   font-family: 'Georgia', serif;
@@ -110,6 +106,81 @@ body {
     0 0 35px rgba(0, 0, 0, 0.3);
 
   transform: scale(1.08);
+}
+
+/* ========================= */
+/* Navigation Bar */
+/* ========================= */
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: center; /* keeps buttons centered */
+  align-items: center;
+
+  padding: 15px 0;
+
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  position: sticky;
+  top: 110px;
+  z-index: 999;
+}
+
+/* Center Button Container */
+.nav-center {
+  display: flex;
+  gap: 40px;
+}
+
+/* Right Username Section */
+.nav-right {
+  position: absolute;
+  right: 60px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+}
+
+/* Navigation Links */
+.navbar a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+
+  color: #333;
+
+  padding: 8px 18px;
+  border-radius: 30px;
+
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+/* Hover Effect */
+.navbar a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Active Route */
+.navbar a.active {
+  background-color: #000;
+  color: white !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Logout Styling */
+.logout-link {
+  color: #b00020;
+}
+
+.logout-link:hover {
+  background-color: rgba(176, 0, 32, 0.1);
+  transform: translateY(-2px);
 }
 
 /* ========================= */

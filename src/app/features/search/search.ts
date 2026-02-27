@@ -60,10 +60,10 @@ export class SearchComponent implements OnInit {
   // LOGOUT
   // ============================================
 
-  logout(): void {
-    this.toastService.info('Logged out successfully');
-    this.authService.logout();
-  }
+  // logout(): void {
+  //   this.toastService.info('Logged out successfully');
+  //   this.authService.logout();
+  // }
 
   // ============================================
   // LOAD DOCUMENTS

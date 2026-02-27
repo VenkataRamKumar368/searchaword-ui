@@ -6,5 +6,35 @@
   </h1>
 </div>
 
+<!-- 🔥 Navigation Bar -->
+<nav class="navbar">
+
+  <!-- Centered Navigation Links -->
+  <div class="nav-center">
+    <a routerLink="/search" routerLinkActive="active">
+      🔎 Search
+    </a>
+
+    <a routerLink="/analytics" routerLinkActive="active">
+      📊 Analytics
+    </a>
+
+    <a (click)="logout()" class="logout-link">
+      🚪 Logout
+    </a>
+  </div>
+
+  <!-- Right-Aligned Username -->
+  <div class="nav-right" *ngIf="username">
+    Welcome, <strong>{{ username }}</strong>
+  </div>
+
+</nav>
+
+<hr>
+
+<!-- Main Content -->
 <router-outlet></router-outlet>
+
+<!-- Toast Notifications -->
 <app-toast></app-toast>
