@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface SearchTrendResponse {
   date: string;
@@ -17,7 +18,8 @@ export interface TopQueryResponse {
 })
 export class AnalyticsService {
 
-  private baseUrl = 'http://localhost:8080/api/v1/analytics';
+  // ✅ Use environment-based API base
+  private readonly baseUrl = `${environment.apiBaseUrl}/analytics`;
 
   constructor(private http: HttpClient) {}
 
@@ -41,7 +43,10 @@ export class AnalyticsService {
 
   getTopQueries(limit: number): Observable<TopQueryResponse[]> {
     return this.http.get<TopQueryResponse[]>(
-      `${this.baseUrl}/top-queries?limit=${limit}`
+      `${this.baseUrl}/top-queries`,
+      {
+        params: new HttpParams().set('limit', limit)
+      }
     );
   }
 }
