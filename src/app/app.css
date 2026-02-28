@@ -30,6 +30,7 @@ body {
   );
 
   scrollbar-gutter: stable both-edges;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 /* ========================= */
@@ -112,9 +113,12 @@ body {
 /* Navigation Bar */
 /* ========================= */
 .navbar {
-  position: relative;
+  position: sticky;
+  top: 110px;
+  z-index: 999;
+
   display: flex;
-  justify-content: center; /* keeps buttons centered */
+  justify-content: center;
   align-items: center;
 
   padding: 15px 0;
@@ -123,10 +127,6 @@ body {
   backdrop-filter: blur(12px);
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-
-  position: sticky;
-  top: 110px;
-  z-index: 999;
 }
 
 /* Center Button Container */
@@ -194,5 +194,77 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ================================================= */
+/* MOBILE RESPONSIVE STYLES */
+/* ================================================= */
+@media (max-width: 768px) {
+
+  /* Reduce title size */
+  .app-title {
+    font-size: 32px;
+    letter-spacing: 2px;
+  }
+
+  .circle-a {
+    width: 45px;
+    height: 45px;
+    font-size: 22px;
+    margin: 0 8px;
+  }
+
+  /* Navbar stacking */
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 0;
+    top: 90px;
+  }
+
+  .nav-center {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navbar a {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  /* Move username below buttons */
+  .nav-right {
+    position: static;
+    margin-top: 6px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+
+/* ================================================= */
+/* EXTRA SMALL DEVICES (Phones < 480px) */
+/* ================================================= */
+@media (max-width: 480px) {
+
+  .app-title {
+    font-size: 26px;
+  }
+
+  .circle-a {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .navbar a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-center {
+    flex-direction: column;
+    width: 90%;
   }
 }
